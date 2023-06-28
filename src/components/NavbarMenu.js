@@ -16,7 +16,7 @@ import {
   onPressSideMenuTab,
   tostMessageLoad,
 } from "../actions";
-import Logo from "../assets/images/logo.svg";
+import Logo from "../assets/images/logo1.png";
 import LogoWhite from "../assets/images/logo-white.svg";
 import UserImage from "../assets/images/user.png";
 import Avatar4 from "../assets/images/xs/avatar4.jpg";
@@ -170,7 +170,7 @@ class NavbarMenu extends React.Component {
             delay={5000}
           >
             <Toast.Header className="toast-info mb-0">
-              Hello, welcome to Lucid, a unique admin Template.
+              Hello, welcome to Industrial Automation.
             </Toast.Header>
           </Toast>
         ) : null}
@@ -202,20 +202,20 @@ class NavbarMenu extends React.Component {
             </div>
 
             <div className="navbar-right">
-              <form id="navbar-search" className="navbar-form search-form">
+              {/* <form id="navbar-search" className="navbar-form search-form">
                 <input
                   className="form-control"
-                  placeholder="Search here..."
+                  placeholder="Search hhhhhere..."
                   type="text"
                 />
                 <button type="button" className="btn btn-default">
                   <i className="icon-magnifier"></i>
                 </button>
-              </form>
+              </form> */}
 
               <div id="navbar-menu">
                 <ul className="nav navbar-nav">
-                  <li>
+                  {/* <li>
                     <a
                       href="filedocuments"
                       className="icon-menu d-none d-sm-block d-md-none d-lg-block"
@@ -241,7 +241,7 @@ class NavbarMenu extends React.Component {
                       <i className="icon-envelope"></i>
                       <span className="notification-dot"></span>
                     </a>
-                  </li>
+                  </li> */}
                   <li
                     className={
                       toggleNotification ? "show dropdown" : "dropdown"
@@ -337,7 +337,7 @@ class NavbarMenu extends React.Component {
                       </li>
                     </ul>
                   </li>
-                  <li
+                  {/* <li
                     className={toggleEqualizer ? "show dropdown" : "dropdown"}
                   >
                     <a
@@ -399,7 +399,7 @@ class NavbarMenu extends React.Component {
                         </a>
                       </li>
                     </ul>
-                  </li>
+                  </li> */}
                   <li>
                     <a href="login" className="icon-menu">
                       <i className="icon-login"></i>
@@ -452,16 +452,16 @@ class NavbarMenu extends React.Component {
               <hr />
               <ul className="row list-unstyled">
                 <li className="col-4">
-                  <small>Sales</small>
+                  <small>Users</small>
                   <h6>456</h6>
                 </li>
                 <li className="col-4">
-                  <small>Order</small>
+                  <small>Blogs</small>
                   <h6>1350</h6>
                 </li>
                 <li className="col-4">
                   <small>Revenue</small>
-                  <h6>$2.13B</h6>
+                  <h6>₹2.13Cr</h6>
                 </li>
               </ul>
             </div>
@@ -477,7 +477,7 @@ class NavbarMenu extends React.Component {
                   Menu
                 </a>
               </li>
-              <li className="nav-item">
+              {/* <li className="nav-item">
                 <a
                   className={sideMenuTab[1] ? "nav-link active" : "nav-link"}
                   data-toggle="tab"
@@ -509,7 +509,7 @@ class NavbarMenu extends React.Component {
                 >
                   <i className="icon-question"></i>
                 </a>
-              </li>
+              </li> */}
             </ul>
             <div className="tab-content p-l-0 p-r-0">
               <div
@@ -542,12 +542,9 @@ class NavbarMenu extends React.Component {
                         >
                           <Link to="demographic">Demographic</Link>
                         </li>
-                        <li className={activeKey === "ioT" ? "active" : ""}>
-                          <Link to="ioT">IoT</Link>
-                        </li>
                       </ul>
                     </li>
-                    <li id="AppContainer" className="">
+                    {/* <li id="AppContainer" className="">
                       <a
                         href="#!"
                         className="has-arrow"
@@ -592,7 +589,7 @@ class NavbarMenu extends React.Component {
                           <Link to="apptaskbar">Taskboard</Link>
                         </li>
                       </ul>
-                    </li>
+                    </li> */}
                     <li id="FileManagerContainer" className="">
                       <a
                         href="#!"
@@ -606,7 +603,7 @@ class NavbarMenu extends React.Component {
                         <span>File Manager</span>
                       </a>
                       <ul className="collapse">
-                        <li
+                        {/* <li
                           className={
                             activeKey === "filemanagerdashboard" ? "active" : ""
                           }
@@ -621,19 +618,19 @@ class NavbarMenu extends React.Component {
                           onClick={() => {}}
                         >
                           <Link to="filedocuments">Documents</Link>
-                        </li>
+                        </li> */}
                         <li
                           className={activeKey === "filemedia" ? "active" : ""}
                           onClick={() => {}}
                         >
                           <Link to="filemedia">Media</Link>
                         </li>
-                        <li
+                        {/* <li
                           className={activeKey === "fileimages" ? "active" : ""}
                           onClick={() => {}}
                         >
                           <Link to="fileimages">Images</Link>
-                        </li>
+                        </li> */}
                       </ul>
                     </li>
                     <li id="BlogContainer" className="">
@@ -653,13 +650,13 @@ class NavbarMenu extends React.Component {
                             activeKey === "blognewpost" ? "active" : ""
                           }
                         >
-                          <Link to="blognewpost">New Post</Link>
+                          <Link to="blognewpost">Add New Blog</Link>
                         </li>
                         <li
                           className={activeKey === "bloglist" ? "active" : ""}
                           onClick={() => {}}
                         >
-                          <Link to="bloglist">Blog List</Link>
+                          <Link to="bloglist">All Blogs</Link>
                         </li>
                         <li
                           className={
@@ -667,11 +664,23 @@ class NavbarMenu extends React.Component {
                           }
                           onClick={() => {}}
                         >
-                          <Link to="blogdetails">Blog Detail</Link>
+                          <Link to="blogdetails">Blog Details</Link>
+                        </li>
+                        <li
+                          className={activeKey === "bloglist" ? "active" : ""}
+                          onClick={() => {}}
+                        >
+                          <Link to="bloglist">Categories</Link>
+                        </li>
+                        <li
+                          className={activeKey === "bloglist" ? "active" : ""}
+                          onClick={() => {}}
+                        >
+                          <Link to="bloglist">Tags</Link>
                         </li>
                       </ul>
                     </li>
-                    <li id="UIElementsContainer" className="">
+                    {/* <li id="UIElementsContainer" className="">
                       <a
                         href="#uiElements"
                         className="has-arrow"
@@ -764,8 +773,8 @@ class NavbarMenu extends React.Component {
                           <Link to="uiprogressbar">Progress Bars</Link>
                         </li>
                       </ul>
-                    </li>
-                    <li id="WidgetsContainer" className="">
+                    </li> */}
+                    {/* <li id="WidgetsContainer" className="">
                       <a
                         href="#!"
                         className="has-arrow"
@@ -873,7 +882,7 @@ class NavbarMenu extends React.Component {
                           <a href="page503">Page 503</a>
                         </li>
                       </ul>
-                    </li>
+                    </li> */}
                     <li id="PagesContainer" className="">
                       <a
                         href="#!"
@@ -1016,7 +1025,7 @@ class NavbarMenu extends React.Component {
                         </li>
                       </ul>
                     </li>
-                    <li id="FormsContainer" className="">
+                    {/* <li id="FormsContainer" className="">
                       <a
                         href="#!"
                         className="has-arrow"
@@ -1045,8 +1054,8 @@ class NavbarMenu extends React.Component {
                           <Link to="basicelements">Basic Elements</Link>
                         </li>
                       </ul>
-                    </li>
-                    <li id="TablesContainer" className="">
+                    </li> */}
+                    {/* <li id="TablesContainer" className="">
                       <a
                         href="#!"
                         className="has-arrow"
@@ -1112,7 +1121,7 @@ class NavbarMenu extends React.Component {
                           <Link to="leafletmap">Leaflet Map</Link>
                         </li>
                       </ul>
-                    </li>
+                    </li> */}
                   </ul>
                 </Nav>
               </div>
@@ -1278,7 +1287,7 @@ class NavbarMenu extends React.Component {
                     <span>Blue</span>
                   </li>
                   <li
-                    data-theme="cyan"
+                    data-theme="red"
                     className="active"
                     className={themeColor === "theme-cyan" ? "active" : ""}
                   >

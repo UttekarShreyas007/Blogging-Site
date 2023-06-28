@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Logo from "../assets/images/logo-white.svg";
+import Logo from "../assets/images/logo1.png";
 import { updateEmail, updatePassword,onLoggedin } from "../actions";
 
 class Login extends React.Component {
@@ -41,7 +41,7 @@ class Login extends React.Component {
             <div className="vertical-align-middle auth-main">
               <div className="auth-box">
                 <div className="top">
-                  <img src={Logo} alt="Lucid" style={{ height: "40px", margin: "10px" }} />
+                  <img src={Logo} alt="Lucid" style={{ height: "100px", margin: "10px" }} />
                 </div>
                 <div className="card">
                   <div className="header">

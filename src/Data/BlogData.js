@@ -88,6 +88,52 @@ export const blogAdsCardData = [
       },
     ],
   },
+
+  {
+    HeaderText: "Tags Clouds",
+    RefLink: [
+      {
+        link: "#",
+        name: "eCommerce",
+      },
+      {
+        link: "#",
+        name: "Microsoft Technologies",
+      },
+      {
+        link: "#",
+        name: "Creative UX",
+      },
+      {
+        link: "#",
+        name: "Wordpress",
+      },
+      {
+        link: "#",
+        name: "Angular JS",
+      },
+      {
+        link: "#",
+        name: "Enterprise Mobility",
+      },
+      {
+        link: "#",
+        name: "Website Design",
+      },
+      {
+        link: "#",
+        name: "HTML5",
+      },
+      {
+        link: "#",
+        name: "Infographics",
+      },
+      {
+        link: "#",
+        name: "Wordpress Development",
+      },
+    ],
+  },
   {
     HeaderText: "Popular Posts",
     PostList: [
@@ -100,38 +146,6 @@ export const blogAdsCardData = [
         Ads: "new rules, more cars, more races",
         Date: "jun 8, 2018",
         ImageUrl: `${Image3}`,
-      },
-    ],
-  },
-  {
-    HeaderText: "Instagram Post",
-    ImageList: [
-      {
-        ImageUrl: `${Insta1}`,
-      },
-      {
-        ImageUrl: `${Insta2}`,
-      },
-      {
-        ImageUrl: `${Insta3}`,
-      },
-      {
-        ImageUrl: `${Insta4}`,
-      },
-      {
-        ImageUrl: `${Insta5}`,
-      },
-      {
-        ImageUrl: `${Insta6}`,
-      },
-      {
-        ImageUrl: `${Insta7}`,
-      },
-      {
-        ImageUrl: `${Insta8}`,
-      },
-      {
-        ImageUrl: `${Insta9}`,
       },
     ],
   },
