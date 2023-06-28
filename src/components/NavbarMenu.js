@@ -414,42 +414,7 @@ class NavbarMenu extends React.Component {
         <div id="left-sidebar" className="sidebar" style={{ zIndex: 9 }}>
           <div className="sidebar-scroll">
             <div className="user-account">
-              <img
-                src={UserImage}
-                className="rounded-circle user-photo"
-                alt="User Profile Picture"
-              />
-              <Dropdown>
-                <span>Welcome,</span>
-                <Dropdown.Toggle
-                  variant="none"
-                  as="a"
-                  id="dropdown-basic"
-                  className="user-name"
-                >
-                  <strong>Alizee Thomas</strong>
-                </Dropdown.Toggle>
-
-                <Dropdown.Menu className="dropdown-menu-right account">
-                  <Dropdown.Item href="profilev2page">
-                    <i className="icon-user"></i>My Profile
-                  </Dropdown.Item>
-                  <Dropdown.Item href="appinbox">
-                    {" "}
-                    <i className="icon-envelope-open"></i>Messages
-                  </Dropdown.Item>
-                  <Dropdown.Item>
-                    {" "}
-                    <i className="icon-settings"></i>Settings
-                  </Dropdown.Item>
-                  <li className="divider"></li>
-                  <Dropdown.Item href="login">
-                    {" "}
-                    <i className="icon-power"></i>Logout
-                  </Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
-              <hr />
+              
               <ul className="row list-unstyled">
                 <li className="col-4">
                   <small>Users</small>

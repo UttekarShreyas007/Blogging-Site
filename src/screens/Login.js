@@ -97,10 +97,6 @@ class Login extends React.Component {
                             Forgot password?
                           </a>
                         </span>
-                        <span>
-                          Don't have an account?{" "}
-                          <a href="registration" >Register</a>
-                        </span>
                       </div>
                     </div>
                   </div>
