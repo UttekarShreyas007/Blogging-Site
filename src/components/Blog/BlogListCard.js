@@ -10,7 +10,7 @@ class BlogListCard extends React.Component {
   };
   render() {
     const {
-      FileArray=[],
+      FileArray = [],
       HeaderText,
       Details,
       postId,
@@ -18,8 +18,8 @@ class BlogListCard extends React.Component {
       category = [],
     } = this.props;
 
-    const singleImageUrl = FileArray[0].fileUrl;
-    console.log(FileArray, "Asfasfasf");
+    const fileType = FileArray[0].fileType;
+    const fileUrl = FileArray[0].fileUrl;
 
     return (
       <>
@@ -30,11 +30,29 @@ class BlogListCard extends React.Component {
         <div className="card single_post">
           <div className="body">
             <div className="img-post">
-              <img
-                className="d-block img-fluid"
-                src={singleImageUrl}
-                alt="First slide"
-              />
+              {fileType.includes("video") && (
+                <video className="d-block img-fluid">
+                  <source src={fileUrl} />
+                </video>
+              )}
+              {fileType.includes("image") && (
+                <img
+                  className="d-block img-fluid"
+                  src={fileUrl}
+                  alt="First slide"
+                />
+              )}
+              {fileType.includes("youtube") && (
+                <iframe
+                  width="560"
+                  height="315"
+                  src={fileUrl + "?controls=0"}
+                  title="YouTube video player"
+                  frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowfullscreen
+                ></iframe>
+              )}
             </div>
             <h3>
               <a href="blogdetails">{HeaderText}</a>
@@ -55,7 +73,9 @@ class BlogListCard extends React.Component {
               <div className="actions">
                 <button
                   className="btn btn-outline-secondary"
-                  onClick={() => {this.handleCLick(postId)}}
+                  onClick={() => {
+                    this.handleCLick(postId);
+                  }}
                 >
                   Continue Reading
                 </button>
