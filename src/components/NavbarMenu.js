@@ -623,14 +623,14 @@ class NavbarMenu extends React.Component {
                         >
                           <Link to="bloglist">All Blogs</Link>
                         </li>
-                        <li
+                        {/* <li
                           className={
                             activeKey === "blogdetails" ? "active" : ""
                           }
                           onClick={() => {}}
                         >
                           <Link to="blogdetails">Blog Details</Link>
-                        </li>
+                        </li> */}
                         <li
                           className={activeKey === "bloglist" ? "active" : ""}
                           onClick={() => {}}

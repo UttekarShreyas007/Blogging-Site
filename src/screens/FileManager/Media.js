@@ -2,13 +2,34 @@ import React from "react";
 import { connect } from "react-redux";
 import PageHeader from "../../components/PageHeader";
 import FileDocumentCard from "../../components/FileManager/FileDocumentCard";
-import { fileMediaData } from "../../Data/FileManagerData";
+import axios from "axios";
 
 class FileMedia extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      mediaFiles: [],
+    };
+  }
   componentDidMount() {
     window.scrollTo(0, 0);
+    axios
+      .get("http://localhost:5000/api/media/allfiles")
+      .then((response) => {
+        console.log(response.data, "ASd");
+        this.setState({ mediaFiles: response.data });
+      })
+      .catch((err) => {
+        console.log("Error", err);
+      });
   }
+
   render() {
+    const deleteMedia = (idToDelete) => {
+      this.setState(prevState => ({
+        mediaFiles: prevState.mediaFiles.filter(item => item._id !== idToDelete)
+      }));
+    };
     return (
       <div
         style={{ flex: 1 }}
@@ -27,14 +48,17 @@ class FileMedia extends React.Component {
             />
 
             <div className="row clearfix">
-              {fileMediaData.map((data, i) => {
+              {this.state.mediaFiles.map((data, i) => {
                 return (
                   <FileDocumentCard
                     key={i}
-                    DocumentIconClass={data.DocumentIconClass}
-                    DocumentName={data.DocumentName}
-                    DocumentSize={data.DocumentSize}
-                    DocumentDate={data.DocumentDate}
+                    DocumentIconClass={"fa fa-image"}
+                    DocumentName={data.fileName}
+                    DocumentSize={data.fileSize.substring(0, 4)}
+                    DocumentDate={data.createdAt}
+                    FileUrl={data.fileUrl}
+                    FileId={data._id}
+                    deleteMedia={deleteMedia}
                   />
                 );
               })}

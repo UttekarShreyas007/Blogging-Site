@@ -16,11 +16,13 @@ class BlogPostCard extends React.Component {
           </div>
           <select className="form-control show-tick">
             <option>Select Category</option>
-            <option>Web Design</option>
-            <option>Photography</option>
-            <option>Technology</option>
-            <option>Lifestyle</option>
-            <option>Sports</option>
+            <option>Articles</option>
+            <option>Brand</option>
+            <option>Interview</option>
+            <option>Trending</option>
+            <option>Feature</option>
+            <option>Magzine</option>
+            <option>Product</option>
           </select>
           <div className="form-group m-t-20 m-b-20">
             <input

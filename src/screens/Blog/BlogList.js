@@ -3,14 +3,36 @@ import { connect } from "react-redux";
 import PageHeader from "../../components/PageHeader";
 import BlogListCard from "../../components/Blog/BlogListCard";
 import SearchCard from "../../components/Blog/SearchCard";
-import BlogAdsCard from "../../components/Blog/BlogAdsCard";
-import { blogListCardData, blogAdsCardData } from "../../Data/BlogData";
+import axios from "axios";
+import { Helmet } from "react-helmet";
 
 class BlogList extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      blogListCardData: [],
+      isLoading: true,
+    };
+  }
   componentDidMount() {
     window.scrollTo(0, 0);
+    axios
+      .get("http://localhost:5000/api/post/allposts")
+      .then((response) => {
+        console.log(response.data, "ASd");
+        this.setState({ blogListCardData: response.data,
+          isLoading: false });
+      })
+      .catch(() => {
+        console.log("Error");
+      });
   }
   render() {
+    const blogListCardData = this.state.blogListCardData;
+    const isLoading = this.state.isLoading;
+    if (isLoading) {
+      return <div>Loading...</div>;
+    }
     return (
       <div
         style={{ flex: 1 }}
@@ -18,6 +40,12 @@ class BlogList extends React.Component {
           document.body.classList.remove("offcanvas-active");
         }}
       >
+        <Helmet>
+          <title>My React App</title>
+          <meta name="Shreyas" content="This is my React application." />
+          <meta name="keywords" content="React, JavaScript, Web Development" />
+          <meta name="author" content="Your Name" />
+        </Helmet>
         <div>
           <div className="container-fluid">
             <PageHeader
@@ -30,19 +58,21 @@ class BlogList extends React.Component {
             <div className="row clearfix">
               <div className="col-lg-8 col-md-12 left-box">
                 {blogListCardData.map((data, i) => {
+                  console.log(data, "ASFASfasfasf");
                   return (
                     <BlogListCard
                       key={"eni" + i}
-                      ImageUrl={data.ImageUrl}
-                      HeaderText={data.HeaderText}
-                      Details={data.Details}
+                      FileArray={data.media}
+                      HeaderText={data.title}
+                      Details={data.description}
+                      postId={data._id}
                     />
                   );
                 })}
               </div>
               <div className="col-lg-4 col-md-12 left-box">
                 <SearchCard />
-                {blogAdsCardData.map((data, i) => {
+                {/* {blogAdsCardData.map((data, i) => {
                   return (
                     <BlogAdsCard
                       key={"adszdsgs" + `${i}`}
@@ -54,7 +84,7 @@ class BlogList extends React.Component {
                       HeaderDetails={data.HeaderDetails}
                     />
                   );
-                })}
+                })} */}
               </div>
             </div>
           </div>
@@ -68,4 +98,4 @@ const mapStateToProps = ({ ioTReducer }) => ({
   isSecuritySystem: ioTReducer.isSecuritySystem,
 });
 
-export default connect(mapStateToProps, {})(BlogList);
+export default (connect(mapStateToProps, {})(BlogList));

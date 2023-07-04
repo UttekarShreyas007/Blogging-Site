@@ -11,13 +11,57 @@ import {
   blogAdsCardData,
   componentCardData,
 } from "../../Data/BlogData";
+import { withRouter } from "react-router-dom";
+import axios from "axios";
+import DynamicMetaTags from "../../utils/DynamicMetaTags";
 
 class BlogDetails extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      _id: "",
+      title: "",
+      description: "",
+      file: [],
+      category: [],
+      isLoading: true,
+    };
+  }
   componentDidMount() {
     window.scrollTo(0, 0);
+    const { match } = this.props;
+    const postId = match.params.postId;
+
+    axios
+      .get(`http://localhost:5000/api/post/${postId}`)
+      .then((response) => {
+        console.log(response, "Sfdafsafasf");
+        this.setState({
+          _id: response.data.post._id,
+          title: response.data.post.title,
+          description: response.data.post.description,
+          file: response.data.post.media,
+          category: response.data.post.category,
+          isLoading: false
+        });
+      })
+      .catch(() => {
+        console.log("Error");
+      });
   }
+
   render() {
+    const { _id, title, description, file, category, isLoading } = this.state;
+
+    if (isLoading) {
+      return <div>Loading...</div>;
+    }
     return (
+      <>
+      <DynamicMetaTags
+      pageTitle={this.state.title}
+      pageDescription={this.state.description}
+    />
       <div
         onClick={() => {
           document.body.classList.remove("offcanvas-active");
@@ -36,9 +80,12 @@ class BlogDetails extends React.Component {
             <div className="row clearfix">
               <div className="col-lg-8 col-md-12 left-box">
                 <BlogListCard
-                  ImageUrl={blogDetailsCardData.ImageUrl}
-                  HeaderText={blogDetailsCardData.HeaderText}
-                  Details={blogDetailsCardData.Details}
+                  FileArray={file}
+                  HeaderText={title}
+                  Details={description}
+                  postId={_id}
+                  category={category}
+                  detailsPage={true}
                 />
                 <BlogCommentCard
                   HeaderText={componentCardData.HeaderText}
@@ -66,6 +113,7 @@ class BlogDetails extends React.Component {
           </div>
         </div>
       </div>
+      </>
     );
   }
 }
@@ -74,4 +122,4 @@ const mapStateToProps = ({ ioTReducer }) => ({
   isSecuritySystem: ioTReducer.isSecuritySystem,
 });
 
-export default connect(mapStateToProps, {})(BlogDetails);
+export default withRouter(connect(mapStateToProps, {})(BlogDetails));

@@ -1,46 +1,88 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
 import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
+import DynamicMetaTags from "../../utils/DynamicMetaTags";
 
 class BlogListCard extends React.Component {
+  handleCLick = (postId) => {
+    this.props.history.push(`/blogdetails/${postId}`);
+  };
   render() {
-    const { ImageUrl, HeaderText, Details } = this.props;
+    const {
+      FileArray=[],
+      HeaderText,
+      Details,
+      postId,
+      detailsPage = false,
+      category = [],
+    } = this.props;
+
+    const singleImageUrl = FileArray[0].fileUrl;
+    console.log(FileArray, "Asfasfasf");
 
     return (
-      <div className="card single_post">
-        <div className="body">
-          <div className="img-post">
-            <img
-              className="d-block img-fluid"
-              src={ImageUrl}
-              alt="First slide"
-            />
+      <>
+        <DynamicMetaTags
+          pageTitle="Blog Details"
+          pageDescription="This is the home page of our website."
+        />
+        <div className="card single_post">
+          <div className="body">
+            <div className="img-post">
+              <img
+                className="d-block img-fluid"
+                src={singleImageUrl}
+                alt="First slide"
+              />
+            </div>
+            <h3>
+              <a href="blogdetails">{HeaderText}</a>
+            </h3>
+            <div dangerouslySetInnerHTML={{ __html: Details }} />
           </div>
-          <h3>
-            <a href="blogdetails">{HeaderText}</a>
-          </h3>
-          <p>{Details}</p>
-        </div>
-        <div className="footer">
-          <div className="actions">
-            <a className="btn btn-outline-secondary">Continue Reading</a>
-          </div>
-          <ul className="stats">
-            <li>
-              <a>General</a>
-            </li>
-            <li>
+          <div className="footer">
+            {detailsPage ? (
+              <div className="actions">
+                <button
+                  className="btn btn-outline-secondary"
+                  onClick={() => this.props.history.push(`/blognewpost`)}
+                >
+                  Update Post
+                </button>
+              </div>
+            ) : (
+              <div className="actions">
+                <button
+                  className="btn btn-outline-secondary"
+                  onClick={() => {this.handleCLick(postId)}}
+                >
+                  Continue Reading
+                </button>
+              </div>
+            )}
+            <ul className="stats">
+              <li>
+                <a
+                // onClick={}
+                >
+                  {category[0]}
+                </a>
+              </li>
+              {/* <li>
               <a className="icon-heart">28</a>
             </li>
             <li>
               <a className="icon-bubbles">128</a>
-            </li>
-          </ul>
+            </li> */}
+            </ul>
+          </div>
         </div>
-      </div>
+      </>
     );
   }
 }
 
 const mapStateToProps = ({ mailInboxReducer }) => ({});
 
-export default connect(mapStateToProps, {})(BlogListCard);
+export default withRouter(connect(mapStateToProps, {})(BlogListCard));
