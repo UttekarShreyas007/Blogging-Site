@@ -11,41 +11,56 @@ class BlogPostCard extends React.Component {
     this.state = {
       description: "", // Add a description state to store the editor content
       userFile: [], // Add a file state to store the selected file
+      youtubeFile: false,
     };
   }
   postData = async () => {
     try {
-      const { description, userFile } = this.state;
-      const blogTitle = document.getElementById("blogTitle").value; // Get the blog title from the input field
-      const category = document.getElementById("category").value; // Get the selected category
+      const { description, userFile, youtubeFile, youtubeUrl } = this.state;
+      const blogTitle = document.getElementById("blogTitle").value;
+      const category = document.getElementById("category").value;
 
-      if (userFile) {
+      if ((userFile && !youtubeFile) || (youtubeFile && youtubeUrl)) {
         let fileArray = [];
 
-        for (const singleFile of userFile) {
-          const config = {
-            bucketName: "mif-bucket",
-            region: "ap-south-1",
-            accessKeyId: "AKIAQPOZMTKKXS7QDAGZ",
-            secretAccessKey: "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",
-          };
-
-          const awsResponse = await ReactS3.uploadFile(singleFile, config);
-          const fileSizeKb = singleFile.size / 1024;
-          const fileSizeMb = fileSizeKb / 1024;
-
-          if (awsResponse.location !== "") {
-            const fileObj = {
-              fileSize: fileSizeMb,
-              fileName: singleFile.name,
-              fileType: singleFile.type,
-              fileUrl: awsResponse.location,
+        if (userFile && !youtubeFile) {
+          for (const singleFile of userFile) {
+            // Upload the file to AWS S3
+            const config = {
+              bucketName: "mif-bucket",
+              region: "ap-south-1",
+              accessKeyId: "AKIAQPOZMTKKXS7QDAGZ",
+              secretAccessKey: "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",
             };
 
-            fileArray.push(fileObj);
-          } else {
-            throw new Error("AWS Upload Error");
+            const awsResponse = await ReactS3.uploadFile(singleFile, config);
+            const fileSizeKb = singleFile.size / 1024;
+            const fileSizeMb = fileSizeKb / 1024;
+
+            if (awsResponse.location !== "") {
+              const fileObj = {
+                fileSize: fileSizeMb,
+                fileName: singleFile.name,
+                fileType: singleFile.type,
+                fileUrl: awsResponse.location,
+              };
+
+              fileArray.push(fileObj);
+            } else {
+              throw new Error("AWS Upload Error");
+            }
           }
+        }
+
+        if (youtubeFile && youtubeUrl) {
+          const youtubeObj = {
+            fileSize: 0, 
+            fileName: "YouTube.mp4", 
+            fileType: "video/youtube", 
+            fileUrl: youtubeUrl, 
+          };
+
+          fileArray.push(youtubeObj);
         }
 
         const obj = {
@@ -54,21 +69,22 @@ class BlogPostCard extends React.Component {
           description: description,
           files: fileArray,
         };
+
         const response = await axios.post(
           "http://localhost:5000/api/post/create",
           obj
         );
+
         if (response) {
-          console.log(response,"Resspifhasf");
+          console.log(response, "Response");
           this.props.history.push(`/blogdetails/${response.data._id}`);
         } else {
           throw new Error("Mongo DB Upload Error");
         }
       } else {
-        throw new Error("Please Upload an Image");
+        throw new Error("Please upload a file or provide a YouTube URL");
       }
     } catch (error) {
-      // ALERT ERROR
       console.log(error);
     }
   };
@@ -102,7 +118,14 @@ class BlogPostCard extends React.Component {
     this.setState({ description: content }); // Update the description state with the editor content
   };
 
+  handleYouTubeUrlChange = (event) => {
+    const youtubeUrl = event.target.value;
+    this.setState({ youtubeUrl });
+  };
+  
   render() {
+    const { youtubeFile } = this.state;
+
     return (
       <div className="card">
         <div className="body">
@@ -115,7 +138,7 @@ class BlogPostCard extends React.Component {
             />
           </div>
           <select className="form-control show-tick" id="category">
-          <option>Select Category</option>
+            <option>Select Category</option>
             <option>Articles</option>
             <option>Brand</option>
             <option>Interview</option>
@@ -124,21 +147,42 @@ class BlogPostCard extends React.Component {
             <option>Magzine</option>
             <option>Product</option>
           </select>
-          <div className="form-group m-t-20 m-b-20">
-            <input
-              accept="audio/*,video/*,image/*"
-              type="file"
-              className="form-control-file"
-              id="fileUpload"
-              multiple
-              aria-describedby="fileHelp"
-              onChange={this.handleFileChange} // Call handleFileChange when the file input changes
-            />
-            <small id="fileHelp" className="form-text text-muted">
-              This is some placeholder block-level help text for the above
-              input. It's a bit lighter and easily wraps to a new line.
-            </small>
-          </div>
+          <button
+            type="button"
+            className="btn btn-danger my-3"
+            onClick={() => this.setState({ youtubeFile: !youtubeFile })}
+          >
+            {youtubeFile ? "Switch to File Upload" : "Switch to URL"}
+          </button>
+          {this.state.youtubeFile ? (
+            <div className="form-group m-t-10 m-b-20">
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Enter Youtube URL"
+                name="fileUrl"
+                id="youtubeUrl"
+                onChange={this.handleYouTubeUrlChange}
+              />
+            </div>
+          ) : (
+            <div className="form-group m-t-10 m-b-20">
+              <input
+                accept="audio/*,video/*,image/*"
+                type="file"
+                className="form-control-file"
+                id="fileUpload"
+                multiple
+                aria-describedby="fileHelp"
+                onChange={this.handleFileChange}
+              />
+              <small id="fileHelp" className="form-text text-muted">
+                This is some placeholder block-level help text for the above
+                input. It's a bit lighter and easily wraps to a new line.
+              </small>
+            </div>
+          )}
+
           <JoditEditor
             value={this.state.description}
             config={{ readonly: false }}
@@ -148,7 +192,7 @@ class BlogPostCard extends React.Component {
           />
           <button
             type="button"
-            className="btn btn-block btn-primary m-t-20"
+            className="btn btn-block btn-danger m-t-20 "
             onClick={this.postData}
           >
             Post

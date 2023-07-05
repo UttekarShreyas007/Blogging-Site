@@ -31,7 +31,7 @@ class BlogListCard extends React.Component {
           <div className="body">
             <div className="img-post">
               {fileType.includes("video") && (
-                <video className="d-block img-fluid">
+                <video className="d-block img-fluid" controls>
                   <source src={fileUrl} />
                 </video>
               )}
@@ -46,11 +46,12 @@ class BlogListCard extends React.Component {
                 <iframe
                   width="560"
                   height="315"
-                  src={fileUrl + "?controls=0"}
+                  src={fileUrl }
                   title="YouTube video player"
-                  frameborder="0"
+                  frameorder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                   allowfullscreen
+                  controls
                 ></iframe>
               )}
             </div>
